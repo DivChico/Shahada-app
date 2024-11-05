@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 //svg
 import Listening from "../../src/assets/svg/aura.svg?react";
+// context
+import { AppContext } from "../context/AppContext";
+// hooks
+import useSpeak from "../hooks/useSpeak";
+
 //components
 import { Header } from "../components";
 const MainLayout = () => {
+  const { speak } = useSpeak();
+  const handleStart = () => {
+    speak("Welcome! Would you like to start?");
+  };
+  const {
+    spokenText,
+    setSpokenText,
+    transcribedText,
+    setTranscribedText,
+    appStatus,
+    setAppStatus,
+  } = useContext(AppContext);
+
   function handleDarkLightMode() {
     if (localStorage.theme === "dark" || !("theme" in localStorage)) {
       document.documentElement.classList.add("dark");
@@ -26,7 +44,13 @@ const MainLayout = () => {
             shahadas
           </p>
           <p className="font-medium text-[20px] leading-[28px] mt-3">
-            Your first step on your path to Islam.
+            {spokenText}{" "}
+          </p>
+          <p
+            onClick={handleStart}
+            className="font-medium text-[20px] leading-[28px] mt-3"
+          >
+            start{" "}
           </p>
           <div className="mt-20">
             <Listening />
