@@ -25,21 +25,10 @@ const MainLayout = () => {
   } = useContext(AppContext);
   const speak = useSpeak(prompts.english[currentStep]);
 
-  // const [isArabic, setIsArabic] = useState(false);
-
-  // useEffect(() => {
-  //   console.log("currentStep from main layout", currentStep);
-  //   setTimeout(() => {
-  //     console.log("speak  3s");
-  //     // speak();
-  //   }, 2000);
-  // }, [currentStep]);
   const startListening = () => {
     setTranscribedText("");
     setAppStatus("listening");
   };
-
-  // const speak = useSpeak(prompts.english[currentStep], startListening);
 
   const handleSpeak = () => {
     speak();
@@ -64,31 +53,18 @@ const MainLayout = () => {
         <Header />
         <div className="flex items-center flex-col justify-center flex-grow  border">
           <p className=" uppercase font-bold text-[64px] leading-[80px]">
-            shahadas
+            shahada
           </p>
-          <p className=" uppercase font-bold text-[64px] leading-[80px]">
-            {appStatus}
+
+          <p className="font-medium  max-w-sm text-center text-[20px] leading-[28px] mt-3">
+            {spokenText}
           </p>
-          <p className="font-medium text-[20px] leading-[28px] mt-3">
-            {spokenText}{" "}
-          </p>
-          <p
-            onClick={handleSpeak}
-            className="font-medium text-[20px] leading-[28px] mt-3"
-          >
-            start{" "}
-          </p>
-          <div className="mt-20">
+
+          <div onClick={handleSpeak} className="mt-20">
             <Globe />
           </div>
           <p className="font-medium text-[18px] leading-[24px] mt-20">
-            {transcribedText}{" "}
-          </p>
-          <p
-            onClick={startListening}
-            className="font-medium text-[18px] leading-[24px] mt-20"
-          >
-            listening
+            I'm {appStatus}
           </p>
         </div>
       </div>

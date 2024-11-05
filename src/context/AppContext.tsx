@@ -6,7 +6,9 @@ type TAppProviderProps = {
 const AppContext = createContext({});
 
 const AppProvider = ({ children }: TAppProviderProps) => {
-  const [spokenText, setSpokenText] = useState("chico-text");
+  const [spokenText, setSpokenText] = useState(
+    "Your first step on your path to Islam , click on the globe to start"
+  );
   const [transcribedText, setTranscribedText] = useState("");
   const [appStatus, setAppStatus] = useState("idle"); // possible states: 'idle', 'listening', 'speaking', etc.
   const [currentStep, setCurrentStep] = useState(0);

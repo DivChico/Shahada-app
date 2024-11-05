@@ -28,20 +28,21 @@ const useListen = () => {
       const transcript = Array.from(event.results)
         .map((result) => result[0].transcript)
         .join("");
+      console.log(transcript);
+
       setTranscribedText(transcript);
-      setAppStatus("idle");
-      setIsListening(false);
+      if (currentStep < prompts.english.length) {
+        setCurrentStep((prev) => prev + 1);
+        setTimeout(() => {
+          speak();
+        }, 1000);
+      }
     };
 
     const handleEnd = () => {
       console.log("end listen ");
       console.log(currentStep);
-      setCurrentStep((prev) => prev + 1);
-      setTimeout(() => {
-        console.log(transcribedText);
 
-        speak();
-      }, 2000);
       // setAppStatus("speaking");
 
       //   if (isListening) {
