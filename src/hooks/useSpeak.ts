@@ -17,9 +17,9 @@ const useSpeak = (text, onEnd) => {
       speech.volume = 0.5; // Volume
 
       speech.onend = () => {
-        if (true) {
-          setAppStatus("idel");
+        setAppStatus("idel");
 
+        if (onEnd) {
           onEnd();
         }
       };

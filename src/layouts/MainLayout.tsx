@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 //svg
 import Listening from "../../src/assets/svg/listening.svg?react";
 // context
@@ -9,6 +9,21 @@ import useSpeak from "../hooks/useSpeak";
 //components
 import { Globe, Header } from "../components";
 import useListen from "../hooks/useListen";
+// constants
+const prompts = {
+  english: [
+    "Hi, are you ready to say the Shahada?",
+    "Say 'Allahu Akbar'.",
+    "Say 'La ilaha illallah'.",
+    "Say 'Muhammadur rasulullah'.",
+  ],
+  arabic: [
+    "هل أنت مستعد لتقول الشهادة؟",
+    "الله أكبر",
+    "لا إله إلا الله",
+    "محمد رسول الله",
+  ],
+};
 const MainLayout = () => {
   const {
     spokenText,
@@ -18,22 +33,26 @@ const MainLayout = () => {
     appStatus,
     setAppStatus,
   } = useContext(AppContext);
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const [isArabic, setIsArabic] = useState(false);
 
   const { isListening } = useListen();
 
-  const handleSpeak = () => {
+  const handleSpeak = async () => {
     if (appStatus !== "speaking") {
-      speak(); // Trigger the speaking function
+      console.log("start");
+
+      await speak(); // Trigger the speaking function
+      console.log("done");
     }
   };
   const startListening = () => {
     setTranscribedText(""); //
     setAppStatus("listening");
   };
-  const speak = useSpeak(
-    "Hi, are you ready to recite the Shahada?",
-    startListening
-  );
+
+  const speak = useSpeak(prompts.english[currentStep], startListening);
 
   function handleDarkLightMode() {
     if (localStorage.theme === "dark" || !("theme" in localStorage)) {
