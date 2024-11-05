@@ -36,7 +36,7 @@ const useListen = () => {
     const handleEnd = () => {
       console.log("end listen ");
       console.log(currentStep);
-
+      setCurrentStep((prev) => prev + 1);
       setTimeout(() => {
         console.log(transcribedText);
 
