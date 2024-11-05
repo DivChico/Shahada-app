@@ -1,19 +1,27 @@
 import { useEffect, useState, useContext } from "react";
 import { AppContext } from "../context/AppContext";
+import useSpeak from "./useSpeak";
+import { prompts } from "../utils/speek";
 
 const useListen = () => {
-  const { transcribedText, setTranscribedText, appStatus, setAppStatus } =
-    useContext(AppContext);
+  const {
+    transcribedText,
+    setCurrentStep,
+    setTranscribedText,
+    appStatus,
+    setAppStatus,
+    currentStep,
+  } = useContext(AppContext);
+  const speak = useSpeak(prompts.english[currentStep]);
+
   const [isListening, setIsListening] = useState(false);
+  const recognition = new (window.SpeechRecognition ||
+    window.webkitSpeechRecognition)();
+  recognition.lang = "en-US";
+  recognition.interimResults = false;
+  recognition.continuous = false;
 
   useEffect(() => {
-    const recognition = new (window.SpeechRecognition ||
-      window.webkitSpeechRecognition)();
-
-    recognition.lang = "en-US";
-    recognition.interimResults = false;
-    recognition.continuous = false;
-
     const handleResult = (event) => {
       console.log("handleResult");
 
@@ -26,9 +34,15 @@ const useListen = () => {
     };
 
     const handleEnd = () => {
-      console.log("handleEnd");
+      console.log("end listen ");
+      console.log(currentStep);
 
-      setAppStatus("idle");
+      setTimeout(() => {
+        console.log(transcribedText);
+
+        speak();
+      }, 2000);
+      // setAppStatus("speaking");
 
       //   if (isListening) {
       //     recognition.start();
@@ -66,7 +80,7 @@ const useListen = () => {
     };
   }, [appStatus, isListening, setTranscribedText, setAppStatus]);
 
-  return { isListening };
+  return { recognition };
 };
 
 export default useListen;

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 //svg
 import Listening from "../../src/assets/svg/listening.svg?react";
 // context
@@ -10,8 +10,9 @@ import useSpeak from "../hooks/useSpeak";
 import { Globe, Header } from "../components";
 import useListen from "../hooks/useListen";
 // constants
-
+import { prompts } from "../utils/speek";
 const MainLayout = () => {
+  useListen();
   const {
     spokenText,
     setSpokenText,
@@ -19,23 +20,29 @@ const MainLayout = () => {
     setTranscribedText,
     appStatus,
     setAppStatus,
+    currentStep,
+    setCurrentStep,
   } = useContext(AppContext);
-  const [currentStep, setCurrentStep] = useState(0);
+  const speak = useSpeak(prompts.english[currentStep]);
 
-  const [isArabic, setIsArabic] = useState(false);
+  // const [isArabic, setIsArabic] = useState(false);
 
-  const { isListening } = useListen();
-
-  const handleSpeak = async () => {
-    if (appStatus !== "speaking") {
-      console.log("start");
-
-      await speak();
-    }
-  };
+  // useEffect(() => {
+  //   console.log("currentStep from main layout", currentStep);
+  //   setTimeout(() => {
+  //     console.log("speak  3s");
+  //     // speak();
+  //   }, 2000);
+  // }, [currentStep]);
   const startListening = () => {
     setTranscribedText("");
     setAppStatus("listening");
+  };
+
+  // const speak = useSpeak(prompts.english[currentStep], startListening);
+
+  const handleSpeak = () => {
+    speak();
   };
 
   function handleDarkLightMode() {
@@ -58,6 +65,9 @@ const MainLayout = () => {
         <div className="flex items-center flex-col justify-center flex-grow  border">
           <p className=" uppercase font-bold text-[64px] leading-[80px]">
             shahadas
+          </p>
+          <p className=" uppercase font-bold text-[64px] leading-[80px]">
+            {appStatus}
           </p>
           <p className="font-medium text-[20px] leading-[28px] mt-3">
             {spokenText}{" "}
@@ -87,4 +97,3 @@ const MainLayout = () => {
 };
 
 export default MainLayout;
-export { speak, startListening };

@@ -1,4 +1,4 @@
-const prompts = {
+export const prompts = {
   english: [
     "Hi, are you ready to say the Shahada?",
     "Say 'Allahu Akbar'.",
@@ -12,5 +12,3 @@ const prompts = {
     "محمد رسول الله",
   ],
 };
-
-speak = useSpeak(prompts.english[currentStep], startListening);
