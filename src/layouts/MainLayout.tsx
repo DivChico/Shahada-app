@@ -10,20 +10,7 @@ import useSpeak from "../hooks/useSpeak";
 import { Globe, Header } from "../components";
 import useListen from "../hooks/useListen";
 // constants
-const prompts = {
-  english: [
-    "Hi, are you ready to say the Shahada?",
-    "Say 'Allahu Akbar'.",
-    "Say 'La ilaha illallah'.",
-    "Say 'Muhammadur rasulullah'.",
-  ],
-  arabic: [
-    "هل أنت مستعد لتقول الشهادة؟",
-    "الله أكبر",
-    "لا إله إلا الله",
-    "محمد رسول الله",
-  ],
-};
+
 const MainLayout = () => {
   const {
     spokenText,
@@ -43,16 +30,13 @@ const MainLayout = () => {
     if (appStatus !== "speaking") {
       console.log("start");
 
-      await speak(); // Trigger the speaking function
-      console.log("done");
+      await speak();
     }
   };
   const startListening = () => {
-    setTranscribedText(""); //
+    setTranscribedText("");
     setAppStatus("listening");
   };
-
-  const speak = useSpeak(prompts.english[currentStep], startListening);
 
   function handleDarkLightMode() {
     if (localStorage.theme === "dark" || !("theme" in localStorage)) {
@@ -103,3 +87,4 @@ const MainLayout = () => {
 };
 
 export default MainLayout;
+export { speak, startListening };
