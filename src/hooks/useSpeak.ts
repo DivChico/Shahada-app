@@ -1,36 +1,36 @@
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
-const useSpeak = () => {
+const useSpeak = (text, onEnd) => {
   const { setSpokenText, setAppStatus } = useContext(AppContext);
 
-  const speak = (text) => {
-    // Set the application status to 'speaking'
-    setAppStatus("speaking");
+  const speak = () => {
     setSpokenText(text);
+    setAppStatus("speaking");
 
-    // Check if the browser supports speech synthesis
     if ("speechSynthesis" in window) {
-      const utterance = new SpeechSynthesisUtterance(text);
+      const speech = new SpeechSynthesisUtterance(text);
 
-      // Optional: Set properties for the utterance
-      utterance.rate = 1.5; // Speed of speech
-      utterance.pitch = 0.5; // Pitch of voice
-      utterance.volume = 0.5; // Volume (0 to 1)
+      // utterance setings
+      speech.rate = 1.7; // Speed
+      speech.pitch = 0.5; // Pitch
+      speech.volume = 0.5; // Volume
 
-      // When the speaking ends, reset the status
-      utterance.onend = () => {
-        setAppStatus("idle"); // Reset status after speaking
+      speech.onend = () => {
+        if (true) {
+          setAppStatus("idel");
+
+          onEnd();
+        }
       };
 
-      // Speak the text
-      window.speechSynthesis.speak(utterance);
+      window.speechSynthesis.speak(speech);
     } else {
       console.error("Speech synthesis not supported in this browser.");
     }
   };
 
-  return { speak };
+  return speak;
 };
 
 export default useSpeak;

@@ -1,3 +1,4 @@
 import Header from "./Header/Header";
 import NavBar from "./Header/NavBar/NavBar";
-export { Header, NavBar };
+import Globe from "./Globe/Globe";
+export { Header, NavBar, Globe };
