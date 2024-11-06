@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
-const useSpeak = (text, onEnd) => {
-  const { setSpokenText, setAppStatus, setTranscribedText } =
+const useSpeak = (text) => {
+  const { setSpokenText, setAppStatus, setTranscribedText, currentStep } =
     useContext(AppContext);
 
   const speak = () => {
@@ -11,7 +11,9 @@ const useSpeak = (text, onEnd) => {
     setTranscribedText("");
 
     if ("speechSynthesis" in window) {
-      const speech = new SpeechSynthesisUtterance(text);
+      const speech = new SpeechSynthesisUtterance(
+        currentStep == 0 ? "repeat after me ," + text : text
+      );
 
       // utterance setings
       speech.rate = 1.2; // Speed
@@ -25,10 +27,6 @@ const useSpeak = (text, onEnd) => {
 
           setAppStatus("listening");
         }, 800);
-
-        if (onEnd) {
-          onEnd();
-        }
       };
 
       window.speechSynthesis.speak(speech);

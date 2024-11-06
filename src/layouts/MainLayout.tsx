@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 //svg
-import Listening from "../../src/assets/svg/listening.svg?react";
 // context
 import { AppContext } from "../context/AppContext";
 // hooks
@@ -16,54 +15,28 @@ import {
 } from "../components";
 import useListen from "../hooks/useListen";
 // constants
-import { prompts } from "../utils/speek";
-//spinner
-import ClipLoader from "react-spinners/ClipLoader";
+import { prompts } from "../constants";
+
+// utils
+import { handleDarkLightMode } from "../utils";
 
 const MainLayout = () => {
   useListen();
-  const {
-    spokenText,
-    setSpokenText,
-    transcribedText,
-    setTranscribedText,
-    appStatus,
-    setAppStatus,
-    currentStep,
-    setCurrentStep,
-  } = useContext(AppContext);
+  const { currentStep } = useContext(AppContext);
   const speak = useSpeak(prompts[currentStep]);
-
-  const startListening = () => {
-    setTranscribedText("");
-    setAppStatus("listening");
-  };
 
   const handleSpeak = () => {
     speak();
   };
 
-  function handleDarkLightMode() {
-    if (localStorage.theme === "dark" || !("theme" in localStorage)) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-
-    if (localStorage.theme === "dark") {
-      localStorage.theme = "light";
-    } else {
-      localStorage.theme = "dark";
-    }
-  }
   return (
     <>
       <div className="lg:max-w-5xl mx-auto p-8 min-h-screen flex flex-col font-Tajawal">
         <Header />
         <div className="flex items-center flex-col justify-center flex-grow  border">
-          <p className=" uppercase font-bold  text-[48px] leading-[60px] md:text-[56px] md:leading-[70px] lg:text-[64px] lg:leading-[80px]">
+          <h1 className=" uppercase font-bold  text-[48px] leading-[60px] md:text-[56px] md:leading-[70px] lg:text-[64px] lg:leading-[80px]">
             shahada
-          </p>
+          </h1>
 
           <SpokenText />
 

@@ -1,13 +1,15 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+//context
 import { AppContext } from "../context/AppContext";
+// custom hooks
 import useSpeak from "./useSpeak";
-import { prompts } from "../utils/speek";
-import { FadeLoader } from "react-spinners";
+//constants
+import { prompts } from "../constants";
+// library
 import leven from "leven";
 
 const useListen = () => {
   const {
-    transcribedText,
     setCurrentStep,
     setTranscribedText,
     appStatus,
@@ -15,7 +17,7 @@ const useListen = () => {
     currentStep,
     setSpokenText,
     setIsLoading,
-    setIsC,
+    setIsCorrect,
   } = useContext(AppContext);
   const speak = useSpeak(prompts[currentStep]);
   const mistake = useSpeak(
@@ -45,13 +47,14 @@ const useListen = () => {
       if (leven(transcript, prompts[currentStep]) >= 10) {
         // it means that the prenouncing is wrong
         console.log("prenouncing is wrong");
+        setIsCorrect(true);
 
         mistake();
       } else {
         // means the preouncing is correct
-        console.log("preouncing is correct");
+        setIsCorrect(false);
 
-        // chick for next word
+        console.log("preouncing is correct");
 
         if (currentStep < prompts.length) {
           if (currentStep == 0) {
