@@ -36,10 +36,14 @@ const NavBar = () => {
             : "hidden"
         }`}
       >
-        <li className="hover:text-gray-500">home</li>
-        <li className="hover:text-gray-500">about us</li>
-        <li className="hover:text-gray-500">blog</li>
-        <li className="hover:text-gray-500">contact</li>
+        <li className="hover:text-gray-500 text-black dark:text-white">home</li>
+        <li className="hover:text-gray-500 text-black dark:text-white">
+          about us
+        </li>
+        <li className="hover:text-gray-500 text-black dark:text-white">blog</li>
+        <li className="hover:text-gray-500 text-black dark:text-white">
+          contact
+        </li>
       </ul>
     </nav>
   );

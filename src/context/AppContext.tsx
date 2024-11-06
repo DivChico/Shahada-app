@@ -19,6 +19,8 @@ interface TAppContext {
   setIsCorrect: (correct: boolean) => void;
   isDark: boolean;
   setIsDark: (correct: boolean) => void;
+  isFinish: boolean;
+  setIsFinish: (correct: boolean) => void;
 }
 
 const AppContext = createContext<any>({});

@@ -18,6 +18,7 @@ const useListen = () => {
     setSpokenText,
     setIsLoading,
     setIsCorrect,
+    setIsFinish,
   } = useContext(AppContext);
   const speak = useSpeak(prompts[currentStep]);
   const mistake = useSpeak(
@@ -60,15 +61,13 @@ const useListen = () => {
         console.log("preouncing is correct");
 
         if (currentStep < prompts.length) {
-          if (currentStep == 0) {
-            setCurrentStep((prev: number) => prev + 1);
-          } else {
-            setCurrentStep((prev: number) => prev + 1);
-
-            setTimeout(() => {
-              speak();
-            }, 500);
-          }
+          setCurrentStep((prev: number) => prev + 1);
+          setTimeout(() => {
+            speak();
+            console.log("speak");
+          }, 500);
+        } else {
+          setIsFinish(true);
         }
       }
       setAppStatus("idle");

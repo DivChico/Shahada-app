@@ -4,5 +4,13 @@ import Globe from "./Globe/Globe";
 import AppStatus from "./AppStatus/AppStatus";
 import SpokenText from "./SpokenText/SpokenText";
 import TranscripedText from "./TranscripedText/TranscripedText";
-
-export { Header, NavBar, Globe, TranscripedText, SpokenText, AppStatus };
+import Certificate from "./Certificate/Certificate";
+export {
+  Header,
+  NavBar,
+  Globe,
+  TranscripedText,
+  SpokenText,
+  AppStatus,
+  Certificate,
+};

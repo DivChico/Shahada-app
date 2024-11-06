@@ -8,6 +8,7 @@ import useSpeak from "../hooks/useSpeak";
 //components
 import {
   AppStatus,
+  Certificate,
   Globe,
   Header,
   SpokenText,
@@ -25,7 +26,7 @@ import { MdDarkMode } from "react-icons/md";
 
 const MainLayout = () => {
   useListen();
-  const { currentStep, setIsDark, isDark } = useContext(AppContext);
+  const { currentStep, setIsDark, isDark, isFinish } = useContext(AppContext);
   const speak = useSpeak(prompts[currentStep]);
 
   const handleSpeak = () => {
@@ -46,8 +47,14 @@ const MainLayout = () => {
           <div onClick={handleSpeak} className="mt-2 max-w-52 lg:mt-20 ">
             <Globe />
           </div>
-          <TranscripedText />
-          <AppStatus />
+          {isFinish ? (
+            <Certificate />
+          ) : (
+            <div>
+              <TranscripedText />
+              <AppStatus />
+            </div>
+          )}
         </div>
         <button
           onClick={() => {
