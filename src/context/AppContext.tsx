@@ -13,6 +13,7 @@ const AppProvider = ({ children }: TAppProviderProps) => {
   const [appStatus, setAppStatus] = useState("idle"); // possible states: 'idle', 'listening', 'speaking', etc.
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
 
   // Context value to be provided to children
   const value = {
@@ -26,6 +27,8 @@ const AppProvider = ({ children }: TAppProviderProps) => {
     setCurrentStep,
     isLoading,
     setIsLoading,
+    isCorrect,
+    setIsCorrect,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

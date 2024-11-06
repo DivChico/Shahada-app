@@ -15,6 +15,7 @@ const useListen = () => {
     currentStep,
     setSpokenText,
     setIsLoading,
+    setIsC,
   } = useContext(AppContext);
   const speak = useSpeak(prompts[currentStep]);
   const mistake = useSpeak(
