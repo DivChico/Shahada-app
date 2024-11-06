@@ -4,7 +4,7 @@ type TAppProviderProps = {
   children: React.ReactNode;
 };
 
-type TAppContext = {
+interface TAppContext {
   spokenText: string;
   setSpokenText: (text: string) => void;
   transcribedText: string;
@@ -17,10 +17,11 @@ type TAppContext = {
   setIsLoading: (loading: boolean) => void;
   isCorrect: boolean;
   setIsCorrect: (correct: boolean) => void;
-};
+  isDark: boolean;
+  setIsDark: (correct: boolean) => void;
+}
 
-// Initial context value
-const AppContext = createContext<TAppContext | undefined>(undefined);
+const AppContext = createContext<any>({});
 
 const AppProvider = ({ children }: TAppProviderProps) => {
   const [spokenText, setSpokenText] = useState(
@@ -31,8 +32,12 @@ const AppProvider = ({ children }: TAppProviderProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [isDark, setIsDark] = useState(false);
+  const [isFinish, setIsFinish] = useState(false);
 
-  const value = {
+  const value: TAppContext = {
+    isFinish,
+    setIsFinish,
     spokenText,
     setSpokenText,
     transcribedText,
@@ -45,6 +50,8 @@ const AppProvider = ({ children }: TAppProviderProps) => {
     setIsLoading,
     isCorrect,
     setIsCorrect,
+    isDark,
+    setIsDark,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

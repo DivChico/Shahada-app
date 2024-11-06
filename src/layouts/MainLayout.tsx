@@ -19,10 +19,13 @@ import { prompts } from "../constants";
 
 // utils
 import { handleDarkLightMode } from "../utils";
+// icons
+import { CiLight } from "react-icons/ci";
+import { MdDarkMode } from "react-icons/md";
 
 const MainLayout = () => {
   useListen();
-  const { currentStep } = useContext(AppContext);
+  const { currentStep, setIsDark, isDark } = useContext(AppContext);
   const speak = useSpeak(prompts[currentStep]);
 
   const handleSpeak = () => {
@@ -33,7 +36,7 @@ const MainLayout = () => {
     <>
       <div className="lg:max-w-5xl mx-auto p-8 min-h-screen flex flex-col font-Tajawal">
         <Header />
-        <div className="flex items-center flex-col justify-center flex-grow  border">
+        <div className="flex items-center flex-col justify-center flex-grow  ">
           <h1 className=" uppercase font-bold  text-[48px] leading-[60px] md:text-[56px] md:leading-[70px] lg:text-[64px] lg:leading-[80px]">
             shahada
           </h1>
@@ -47,10 +50,13 @@ const MainLayout = () => {
           <AppStatus />
         </div>
         <button
-          onClick={handleDarkLightMode}
-          className=" fixed lg:w-16 lg:h-16 w-10 text-sm h-10 bottom-10 right-10 bg-black dark:bg-white rounded-full text-white dark:text-black font-semibold"
+          onClick={() => {
+            handleDarkLightMode();
+            setIsDark(!isDark);
+          }}
+          className=" fixed flex items-center justify-center  text-sm h-5  w-5 bottom-10 right-10 bg-black dark:bg-white rounded-full text-white dark:text-black font-semibold"
         >
-          {localStorage.theme === "dark" ? "light" : "dark "}
+          {isDark ? <CiLight size={20} /> : <MdDarkMode size={20} />}
         </button>
       </div>
     </>

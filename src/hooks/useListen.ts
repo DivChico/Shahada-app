@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 //context
 import { AppContext } from "../context/AppContext";
 // custom hooks
@@ -24,19 +24,22 @@ const useListen = () => {
     " close , but repeat after me " + prompts[currentStep]
   );
 
-  const [isListening, setIsListening] = useState(false);
-  const recognition = new (window.SpeechRecognition ||
-    window.webkitSpeechRecognition)();
+  const recognition =
+    "SpeechRecognition" in window || "webkitSpeechRecognition" in window
+      ? new ((window as any).SpeechRecognition ||
+          (window as any).webkitSpeechRecognition)()
+      : null;
+
   recognition.lang = "en-US";
   recognition.interimResults = false;
   recognition.continuous = false;
 
   useEffect(() => {
-    const handleResult = (event) => {
+    const handleResult = (event: any) => {
       console.log("handleResult");
 
-      const transcript = Array.from(event.results)
-        .map((result) => result[0].transcript)
+      const transcript = Array.from(event.results as any)
+        .map((result: any) => result[0].transcript)
         .join("");
       console.log(transcript);
 
@@ -58,9 +61,9 @@ const useListen = () => {
 
         if (currentStep < prompts.length) {
           if (currentStep == 0) {
-            setCurrentStep((prev) => prev + 1);
+            setCurrentStep((prev: number) => prev + 1);
           } else {
-            setCurrentStep((prev) => prev + 1);
+            setCurrentStep((prev: number) => prev + 1);
 
             setTimeout(() => {
               speak();
@@ -85,7 +88,6 @@ const useListen = () => {
 
       console.error("Speech recognition error:", event.error);
       setAppStatus("idle");
-      setIsListening(false);
 
       setAppStatus("idle");
     };
@@ -95,7 +97,6 @@ const useListen = () => {
       setIsLoading(true);
 
       recognition.start();
-      setIsListening(true);
     }
 
     // Event listeners for recognition events
@@ -110,7 +111,7 @@ const useListen = () => {
       recognition.removeEventListener("error", handleError);
       recognition.stop();
     };
-  }, [appStatus, isListening, setTranscribedText, setAppStatus]);
+  }, [appStatus, setTranscribedText, currentStep, setAppStatus]);
 
   return { recognition };
 };

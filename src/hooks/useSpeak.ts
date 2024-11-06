@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
-const useSpeak = (text) => {
+const useSpeak = (text: string) => {
   const { setSpokenText, setAppStatus, setTranscribedText, currentStep } =
     useContext(AppContext);
 
@@ -12,7 +12,7 @@ const useSpeak = (text) => {
 
     if ("speechSynthesis" in window) {
       const speech = new SpeechSynthesisUtterance(
-        currentStep == 0 ? "repeat after me ," + text : text
+        currentStep == 0 ? "repeat after me ," + text : "say," + text
       );
 
       // utterance setings
