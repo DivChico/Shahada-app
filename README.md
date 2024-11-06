@@ -1,50 +1,34 @@
-# React + TypeScript + Vite
+# Voice-Based Word Recitation App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+a responsive and interactive web application using
+React.js that allows users to recite the Shahada, with the application providing
+visual feedback for audio input
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend**: React with Tailwind CSS for styling and React Icons for iconography.
+- **State Management**: context for managing app-wide states like word progress and user preferences.
+- **Speech Recognition**: Custom hooks leveraging Web Speech API.
+- **Similarity Matching**: Levenshtein algorithm via the `leven` library to measure accuracy of user’s recitation.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Voice Input Matching**: Users recite words, and the app checks for accuracy before moving to the next word.
+- **Dark/Light Mode**: Theme toggle for user preference.
+- **Responsive Design**: Fully responsive with Tailwind CSS.
+- **High Performance**: Optimized for smooth interaction and minimal delay.
+- **Dark/Light Mode Toggle**: theme customization.
 
-- Configure the top-level `parserOptions` property like this:
+## Custom Hooks
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **useSpeak**: Plays a specific word or string as a voice output.
+- **useListen**: Listens for user input, transcribes it, and compares it to the target word.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Design Patterns
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. **Custom Hooks**: `useSpeak` and `useListen` are reusable hooks that separate concerns and simplify component logic.
+2. **Separation of Concerns**: Functions are modular, focusing on specific tasks to enhance maintainability and readability.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Known Bugs
+
+1. **Double Command Execution**: The app repeats the initial command twice, which will be fixed in future updates.
