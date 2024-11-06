@@ -81,7 +81,7 @@ const useListen = () => {
       setAppStatus("idle");
     };
 
-    const handleError = (event) => {
+    const handleError = (event: any) => {
       console.log("handleError");
       setIsLoading(false);
 

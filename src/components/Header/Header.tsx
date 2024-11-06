@@ -1,4 +1,3 @@
-import React from "react";
 import NavBar from "./NavBar/NavBar";
 // icons
 import { CiSearch } from "react-icons/ci";
