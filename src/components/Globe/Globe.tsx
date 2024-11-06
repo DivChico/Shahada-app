@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 // SVG imports
-import ListeningIcon from "../../assets/svg/listening.svg?react";
-import SpeakingIcon from "../../assets/svg/speaking.svg?react";
-import IdleIcon from "../../assets/svg/idle.svg?react";
-import CorrectingIcon from "../../assets/svg/correcting.svg?react";
+import ListeningIcon from "../../assets/svg/listening.svg";
+import SpeakingIcon from "../../assets/svg/speaking.svg";
+import IdleIcon from "../../assets/svg/idle.svg";
+import CorrectingIcon from "../../assets/svg/correcting.svg";
 
 const Globe = () => {
   const { appStatus } = useContext(AppContext);

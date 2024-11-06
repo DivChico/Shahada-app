@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 // icons
 import { IoNewspaperSharp } from "react-icons/io5";
