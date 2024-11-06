@@ -8,6 +8,7 @@ const useSpeak = (text, onEnd) => {
   const speak = () => {
     setSpokenText(text);
     setAppStatus("speaking");
+    setTranscribedText("");
 
     if ("speechSynthesis" in window) {
       const speech = new SpeechSynthesisUtterance(text);
@@ -21,10 +22,9 @@ const useSpeak = (text, onEnd) => {
         console.log("end speek");
         setTimeout(() => {
           console.log("end  3s");
-          setTranscribedText("");
 
           setAppStatus("listening");
-        }, 2000);
+        }, 800);
 
         if (onEnd) {
           onEnd();

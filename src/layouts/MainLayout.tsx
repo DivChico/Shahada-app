@@ -7,10 +7,19 @@ import { AppContext } from "../context/AppContext";
 import useSpeak from "../hooks/useSpeak";
 
 //components
-import { Globe, Header } from "../components";
+import {
+  AppStatus,
+  Globe,
+  Header,
+  SpokenText,
+  TranscripedText,
+} from "../components";
 import useListen from "../hooks/useListen";
 // constants
 import { prompts } from "../utils/speek";
+//spinner
+import ClipLoader from "react-spinners/ClipLoader";
+
 const MainLayout = () => {
   useListen();
   const {
@@ -23,7 +32,7 @@ const MainLayout = () => {
     currentStep,
     setCurrentStep,
   } = useContext(AppContext);
-  const speak = useSpeak(prompts.english[currentStep]);
+  const speak = useSpeak(prompts[currentStep]);
 
   const startListening = () => {
     setTranscribedText("");
@@ -49,24 +58,27 @@ const MainLayout = () => {
   }
   return (
     <>
-      <div className="max-w-5xl mx-auto p-8 min-h-screen flex flex-col">
+      <div className="lg:max-w-5xl mx-auto p-8 min-h-screen flex flex-col font-Tajawal">
         <Header />
         <div className="flex items-center flex-col justify-center flex-grow  border">
-          <p className=" uppercase font-bold text-[64px] leading-[80px]">
+          <p className=" uppercase font-bold  text-[48px] leading-[60px] md:text-[56px] md:leading-[70px] lg:text-[64px] lg:leading-[80px]">
             shahada
           </p>
 
-          <p className="font-medium  max-w-sm text-center text-[20px] leading-[28px] mt-3">
-            {spokenText}
-          </p>
+          <SpokenText />
 
-          <div onClick={handleSpeak} className="mt-20">
+          <div onClick={handleSpeak} className="mt-2 max-w-52 lg:mt-20 ">
             <Globe />
           </div>
-          <p className="font-medium text-[18px] leading-[24px] mt-20">
-            I'm {appStatus}
-          </p>
+          <TranscripedText />
+          <AppStatus />
         </div>
+        <button
+          onClick={handleDarkLightMode}
+          className=" fixed lg:w-16 lg:h-16 w-10 text-sm h-10 bottom-10 right-10 bg-black dark:bg-white rounded-full text-white dark:text-black font-semibold"
+        >
+          {localStorage.theme === "dark" ? "light" : "dark "}
+        </button>
       </div>
     </>
   );

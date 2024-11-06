@@ -6,7 +6,12 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        poppins: ["Tajawal", "sans-serif"],
+        Tajawal: ["Tajawal", "sans-serif"],
+        Poppins: ["Poppins", "sans-serif"],
+      },
+      colors: {
+        dbg: "#1B1C1E",
+        wbg: "#F7F7F7",
       },
     },
   },

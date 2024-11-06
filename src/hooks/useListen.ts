@@ -2,6 +2,8 @@ import { useEffect, useState, useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import useSpeak from "./useSpeak";
 import { prompts } from "../utils/speek";
+import { FadeLoader } from "react-spinners";
+import leven from "leven";
 
 const useListen = () => {
   const {
@@ -11,8 +13,13 @@ const useListen = () => {
     appStatus,
     setAppStatus,
     currentStep,
+    setSpokenText,
+    setIsLoading,
   } = useContext(AppContext);
-  const speak = useSpeak(prompts.english[currentStep]);
+  const speak = useSpeak(prompts[currentStep]);
+  const mistake = useSpeak(
+    " close , but repeat after me " + prompts[currentStep]
+  );
 
   const [isListening, setIsListening] = useState(false);
   const recognition = new (window.SpeechRecognition ||
@@ -31,37 +38,57 @@ const useListen = () => {
       console.log(transcript);
 
       setTranscribedText(transcript);
-      if (currentStep < prompts.english.length) {
-        setCurrentStep((prev) => prev + 1);
-        setTimeout(() => {
-          speak();
-        }, 1000);
+      console.log(prompts[currentStep]);
+      setIsLoading(false);
+
+      if (leven(transcript, prompts[currentStep]) >= 10) {
+        // it means that the prenouncing is wrong
+        console.log("prenouncing is wrong");
+
+        mistake();
+      } else {
+        // means the preouncing is correct
+        console.log("preouncing is correct");
+
+        // chick for next word
+
+        if (currentStep < prompts.length) {
+          if (currentStep == 0) {
+            setCurrentStep((prev) => prev + 1);
+          } else {
+            setCurrentStep((prev) => prev + 1);
+
+            setTimeout(() => {
+              speak();
+            }, 500);
+          }
+        }
       }
+      setAppStatus("idle");
     };
 
     const handleEnd = () => {
       console.log("end listen ");
-      console.log(currentStep);
+      setIsLoading(false);
 
-      // setAppStatus("speaking");
-
-      //   if (isListening) {
-      //     recognition.start();
-      //   }
+      setSpokenText("no speach detected , please press again to start");
+      setAppStatus("idle");
     };
 
     const handleError = (event) => {
       console.log("handleError");
+      setIsLoading(false);
 
       console.error("Speech recognition error:", event.error);
       setAppStatus("idle");
       setIsListening(false);
+
+      setAppStatus("idle");
     };
 
-    // Start listening when appStatus is set to "listening"
-    // if (appStatus === "listening" && !isListening) {
     if (appStatus === "listening") {
       console.log("start listining");
+      setIsLoading(true);
 
       recognition.start();
       setIsListening(true);
