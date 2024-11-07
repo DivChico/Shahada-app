@@ -12,19 +12,23 @@ const Globe = () => {
   const renderStatusIcon = () => {
     switch (appStatus) {
       case "listening":
-        return <ListeningIcon />;
+        return ListeningIcon;
       case "speaking":
-        return <SpeakingIcon />;
+        return SpeakingIcon;
       case "idle":
-        return <IdleIcon />;
+        return IdleIcon;
       case "correcting":
-        return <CorrectingIcon />;
+        return CorrectingIcon;
       default:
-        return <IdleIcon />;
+        return IdleIcon;
     }
   };
 
-  return <div>{renderStatusIcon()}</div>;
+  return (
+    <div>
+      <img src={renderStatusIcon()} className="logo" alt="Vite logo" />
+    </div>
+  );
 };
 
 export default Globe;
